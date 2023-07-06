@@ -2,7 +2,7 @@ package org.example;
 /*******************************************************************
  * Covers NFL Extraction Tool
  * Copyright 2020 Dan Farris
- * version 230629
+ * version 230706
  * Builds data event id array and calendar date array
  *******************************************************************/
 import com.google.common.hash.BloomFilter;

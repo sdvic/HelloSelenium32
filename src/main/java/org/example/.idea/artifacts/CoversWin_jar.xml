@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="CoversWin:jar">
+    <output-path>$PROJECT_DIR$/../../../../../../../Big/ Grey/ Seagate/HelloSelenium32/target/classes/src/main</output-path>
+    <root id="archive" name="CoversWin.jar">
+      <element id="module-output" name="CoversWin" />
+    </root>
+  </artifact>
+</component>
