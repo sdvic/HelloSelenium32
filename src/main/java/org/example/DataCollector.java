@@ -2,26 +2,13 @@ package org.example;
 /*******************************************************************
  * Covers NFL Extraction Tool
  * Copyright 2020 Dan Farris
- * version 230706
+ * version 230706A
  * Builds data event id array and calendar date array
  *******************************************************************/
-import com.google.common.hash.BloomFilter;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.safari.SafariDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-
-import static org.openqa.selenium.By.cssSelector;
-import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 public class DataCollector
 {
     private static HashMap<String, String> bet365HomeTeamOdds = new HashMap<>();
@@ -140,31 +127,6 @@ public class DataCollector
             homeShortNameMap.put(dataEventId, homeShortName);
         }
     }
-    public void collectConsensusData(Elements thisMatchupConsensus, String dataEventId)
-    {
-        this.dataEventId = dataEventId;
-        String ouOver = null;
-        String ouUnder = null;
-        String atsHome = null;
-        String atsAway = null;
-        Elements rightConsensus = thisMatchupConsensus.select(".covers-CoversConsensusDetailsTable-finalWagersright");//Home/Under
-        Elements leftConsensus = thisMatchupConsensus.select(".covers-CoversConsensusDetailsTable-finalWagersleft");//Away/Over
-        try//To catch missing consensus data due to delayed or cancelled game
-        {
-            ouUnder = rightConsensus.select("div").get(1).text();
-            ouOver = leftConsensus.select("div").get(1).text();
-            atsHome = leftConsensus.select("div").get(0).text();
-            atsAway = rightConsensus.select("div").get(0).text();
-        }
-        catch (Exception e)
-        {
-            System.out.println("DC121 DataCollector, no consensus data for " + gameIdentifier);
-        }
-        ouOversMap.put(dataEventId, ouOver);
-        ouUndersMap.put(dataEventId, ouUnder);
-        atsHomesMap.put(dataEventId, atsAway);
-        atsAwaysMap.put(dataEventId, atsHome);
-    }
     public HashMap<String, String> getHomeFullNameMap()
     {
         return homeFullNameMap;
@@ -213,14 +175,6 @@ public class DataCollector
     public HashMap<String, String> getAwayTeamCompleteNameMap()
     {
         return awayTeamCompleteNameMap;
-    }
-    public HashMap<String, String> getTotalHomeOpenOddsMap()
-    {
-        return totalHomeOpenOddsMap;
-    }
-    public HashMap<String, String> getTotalHomeCloseOddsMap()
-    {
-        return totalHomeCloseOddsMap;
     }
     public void setThisSeason(String thisSeason)
     {

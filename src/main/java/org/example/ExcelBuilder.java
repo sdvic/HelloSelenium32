@@ -2,9 +2,9 @@ package org.example;
 /*******************************************************************
  * Covers NFL Extraction Tool
  * Copyright 2020 Dan Farris
- * version 230706
+ * version 230706A
  *******************************************************************/
-import com.beust.jcommander.Parameterized;
+
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
@@ -12,7 +12,6 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -28,8 +27,6 @@ public class ExcelBuilder
     private String awayTeam;
     private String matchupDate;
     private String weekNumber;
-//    private String homeDivision;//M13
-//    private String awayDivision;//AB28
     private HashMap<String, String> homeTeamsMap = new HashMap<>();
     private HashMap<String, String> awayTeamsMap = new HashMap<>();
     private HashMap<String, String> gameDatesMap = new HashMap<>();
@@ -37,15 +34,12 @@ public class ExcelBuilder
     private HashMap<String, String> atsAwaysMap = new HashMap<>();
     private HashMap<String, String> ouOversMap;
     private HashMap<String, String> ouUndersMap;
-//    private HashMap<String, String> homeMLOddsMap = new HashMap<>();
     private HashMap<String, String> homeMoneyLineOddsMap = new HashMap<>();
     private HashMap<String, String> awayMoneyLineOddsMap = new HashMap<>();
     private HashMap<String, String> homeSpreadOddsMap = new HashMap<>();
     private HashMap<String, String> homeSpreadCloseOddsMap = new HashMap<>();
     private HashMap<String, String> homeSpreadOpenOddsMap = new HashMap<>();
     private HashMap<String, String> awaySpreadOddsMap = new HashMap<>();
-//    private HashMap<String, String> homeTotalOpenOddsMap = new HashMap<>();
-//    private HashMap<String, String> homeTotalCloseOddsMap = new HashMap<>();
     private XSSFSheet sportDataSheet;
     private XSSFWorkbook sportDataWorkBook = new XSSFWorkbook();
     private XSSFSheet sportDataUpdateSheet = null;
@@ -115,10 +109,9 @@ public class ExcelBuilder
         String awayTimeZone = awayCompleteNameMap.get(dataEventID).split("&")[2].split(" ")[0];
         int deltaTimeZone = Integer.parseInt(homeTimeZone) - Integer.parseInt(awayTimeZone);//Home minus away...negative numbers bad for away team...going west
         String deltaTimeZoneString = String.valueOf(deltaTimeZone);
-        System.out.println("---------------------------- deltaTimeZone: " + deltaTimeZone);
-if(deltaTimeZone == 2)
+if(deltaTimeZone == 2 && gameLocalTimeHour.equals("13"))
 {
-    System.out.println("$$$$$$$$$$$$$$$$$$$$" + homeCompleteNameMap.get(dataEventID) + " is 2 hours ahead of " + awayCompleteNameMap.get(dataEventID) + " so " +  homeCompleteNameMap.get(dataEventID) + " wins!!!!!!");
+    System.out.println("$$$$$$$$$$$$$$$$$$$$...delta time zone is " + deltaTimeZoneString + " and game time is " +  gameLocalTimeHour + " so "  +  awayCompleteNameMap.get(dataEventID) + " loses!!!!!!");
 }
         sportDataSheet.getRow(eventIndex).createCell(10);// Home team full name e.g. Dallas Coyboys Column K11
         sportDataSheet.getRow(eventIndex).getCell(10).setCellStyle(leftStyle);
@@ -212,14 +205,6 @@ if(deltaTimeZone == 2)
             homeSpreadOddsMap.put(dataEventId, homeMoneyLineOdds);
         }
     }
-    public void setAwayTeamCompleteName(String awayTeamCompleteName)
-    {
-        this.awayTeamCompleteName = awayTeamCompleteName;
-    }
-    public void setHomeTeamCompleteName(String homeTeamCompleteName)
-    {
-        this.homeTeamCompleteName = homeTeamCompleteName;
-    }
     public void setAwayCompleteNameMap(HashMap<String, String> awayCompleteNameMap)
     {
         this.awayCompleteNameMap = awayCompleteNameMap;
@@ -235,14 +220,5 @@ if(deltaTimeZone == 2)
     public void setWeekNumber(String weekNumber)
     {
         this.weekNumber = weekNumber;
-    }
-
-    public void setHomeSpreadCloseOddsMap(HashMap<String, String> homeSpreadCloseOddsMap)
-    {
-        this.homeSpreadCloseOddsMap = homeSpreadCloseOddsMap;
-    }
-    public void setAwayMoneylineCloseOddsMap(HashMap<String, String> awayMoneylineCloseOddsMap)
-    {
-        this.awayMoneylineCloseOddsMap = awayMoneylineCloseOddsMap;
     }
 }

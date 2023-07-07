@@ -3,7 +3,7 @@ package org.example;
  * Must be run before
  * cd /usr/bin/
  * sudo safaridriver --enable
- * version 230706
+ * version 230706A
  **********************************************************************************/
 import java.util.HashMap;
 public class CityNameMapBuilder
